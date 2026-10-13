@@ -1,42 +1,32 @@
 # ScalpDetectAI
 
-## Overview
+A small **Streamlit + TensorFlow image-classification prototype** intended to run inference with a fine-tuned InceptionV3 model for scalp/hair image categories.
 
-**ScalpDetectAI** is a machine learning project designed to predict scalp and hair diseases. It uses advanced image processing techniques such as Gaussian filtering and CLAHE (Contrast Limited Adaptive Histogram Equalization), along with the InceptionV3 model, fine-tuned for better accuracy. The project is implemented using Python, Streamlit, and TensorFlow.
+## What is in this repository
 
-## Installation
+`app.py` contains a Streamlit interface that uploads an image, resizes it to 150×150, normalizes the pixel values and calls `tf.keras.models.load_model(...).predict(...)`. The UI displays the raw prediction and maps its highest-scoring class to a hard-coded list of 11 labels.
 
-1. **Clone the repository**:
-   ```sh
-   git clone https://github.com/yourusername/ScalpDetectAI.git
-   cd ScalpDetectAI
-   ```
+**Important:** The required `inception_v3_finetuned_L2.h5` checkpoint is not included. The class list and preprocessing must match the model's original training configuration; that alignment cannot be independently verified from this repository alone.
 
-2. **Create and activate a virtual environment**:
-   ```sh
-   python -m venv env
-   source env/bin/activate    # On Windows, use `env\Scripts\activate`
-   ```
+## Run locally
 
-3. **Install the required packages**:
-   
+```bash
+git clone https://github.com/DevyanshMalhotra/ScalpDetectAI.git
+cd ScalpDetectAI
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# Linux/macOS: source .venv/bin/activate
+pip install streamlit tensorflow pillow numpy
+```
 
-## Usage
+Place your compatible `inception_v3_finetuned_L2.h5` checkpoint at the repository root, then run:
 
-1. **Run the application**:
-   ```sh
-   streamlit run app.py
-   ```
+```bash
+streamlit run app.py
+```
 
-2. **Access the application**:
-   Open your browser and navigate to `http://localhost:8501`.
+The app cannot start inference without the checkpoint.
 
-## Contributing
+## Limitations
 
-Contributions are welcome! Please fork this repository and submit pull requests.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
-
+This is not a clinically validated diagnostic tool, and the output must not be used for medical decisions. The repository does not include training scripts, documented data provenance, validation metrics or a published model checkpoint. The existing UI is an inference demonstrator rather than a deployable diagnostic product.
